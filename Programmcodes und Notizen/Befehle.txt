@@ -1,0 +1,40 @@
+Am	Addition					1
+AAm	Doppelwortaddition				2
+Bm	Bringen						3
+BBm	Doppelwortbringen				4
+BTm	Bringtransfer					23
+CAm	Konstantenaddition				7
+CBm	Konstantenbringen				8
+CIm	Konstantenkoknjunktion				9
+CSm	Konstantensubtraktion				10
+CTm	Konjunktion mit negativer Konstante		11
+Dm	Division					19
+DIm	Disjunktion					6
+Em	Sprungbefehl					31
+EmE	Bandbefehl Sprung				-
+Fm	Sprung mit Notierung				30
+Hm	Adressenerweiterungsregister setzen		24
+Im	Konjunktion					5
+ISm	Konjunktion mit negativem Operand		12
+Km	Keine Operation					0
+Mm	Multiplikation					18
+MB(a+b)	Magnetbandoperation				25
+NSm	Negativbringen					13
+Sm	Subtraktion					14
+SHLm	Linksverschieben				20+1000
+SHLVm	Verkoppeltes Linksverschieben			20+1010
+SHRm	Rechtsverschieben				20+0100
+SHRVm	Verkoppeltes Rechtsverschieben			20+0110
+SHRWm	Zyklisches Rechtsverschieben			20+0101
+SHRVWm	Verkoppelt Zykl Rechtsverschieben		20+0111
+SSm	Doppelwortsubtraktion				15
+STm	Stop						28
+Tm	Testsprung					29
+TIm	Tausche Inhalt					21
+Um	Umspeichern					16
+UmU	Bandbefehl Umspeichern				-
+UTm	Umspeichertransfer				22
+UUm	Doppelowrtumspeichern				17
+X(g+s)	Freigabeaktivierung				26+0
+Y(g+s)	Schaltimpuls					26+1
+Zm	Zählerladen					27

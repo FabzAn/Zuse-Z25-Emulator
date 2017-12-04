@@ -1,0 +1,110 @@
+100 k:			10
+101 l:			noch unbearbeitete Stellen von x
+103 o:			Anzahl Stellen
+104 m: 			1er Stelle
+m+1:			10er Stelle
+.
+.
+.
+NICHT IN BEREICH 15!!! 64 n:			Index, Verweist auf m-1 und hat Modbits P und Q gesetzt. PQK103
+Aufrufproramm ab 0+65:
+U3
+X7
+CB8
+SHRW5
+U7
+X7
+CB2
+SHRW5
+U7
+B3
+H15
+GF0
+ST0
+
+Ab Stelle 0 in Bereich 15
+H15			Alle genutzten Speicherstellen sind in Bereich 15
+GU101			Eingabe sichern
+CB10			Konstante 10 vorbereiten
+GU100
+CB0			Anzahl Stellen nullen
+GU103
+CB3			Index zurücksetzen
+SHRW2
+CA103
+U64
+X7			Zi schreiben
+CB27
+SHRW5
+U7
+GB101			loop: x/10, Ergebnis in a, Rest in v		Stelle 14
+U3
+CB0
+GD100
+GU101			Übrige Stellen werden gesichert
+B3			Rest korrigieren
+CA9			(10-1)
+SHR1			Rest steht jetzt korrekt in a
+K1
+GU64			Stelle nach m+o
+GB103			o++
+CA1
+GU103
+GB101			Sprung falls keine Stellen mehr übrig
+PQGE40
+GE14
+
+K0			w: höchste Stelle laden				Stelle 40
+GB64
+PQGE70			loop2: Zahl wird schrittweise verringert, um Ziffer zu ermitteln		Stelle 42
+CS1
+PQGE72
+CS1
+PQGE74
+CS1
+PQGE76
+CS1
+PQGE78
+CS1
+PQGE80
+CS1
+PQGE82
+CS1
+PQGE84
+CS1
+PQGE86
+CS1
+PQGE88
+GB103			ausgabeEnde: o--				Stelle 61
+CS1
+PQE5			Rücksprung falls o == 0
+GU103
+K-1			nächste Stelle laden
+GB64
+GE42
+
+CB0			um Adressensubstitution zu verhindern
+CB22			0ausgeben:					Stelle 70
+GE89
+CB23			1ausgeben:					Stelle 72
+GE89
+CB19			2ausgeben:					Stelle 74
+GE89
+CB1			3ausgeben:					Stelle 76
+GE89
+CB10			4ausgeben:					Stelle 78
+GE89
+CB16			5ausgeben:					Stelle 80
+GE89
+CB21			6ausgeben:					Stelle 82
+GE89
+CB7			7ausgeben:					Stelle 84
+GE89
+CB6			8ausgeben:					Stelle 86
+GE89
+CB24			9ausgeben:					Stelle 88
+
+X7			abschließen: Zeichen schreiben			Stelle 89
+SHRW5
+U7
+GE61

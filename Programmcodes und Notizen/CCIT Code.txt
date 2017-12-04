@@ -1,0 +1,48 @@
+Abhängig davon, ob Zi (1...) oder Bu(A...) zuletzt eingegeben wurde, hat ein Bitcode eine von zwei Bedeutungen.
+
+110.11, 100.01, 001.11, 001.01, 000.01 wird als "+7'3" interpretiert.
+111.11, 100.01, 001.11, 001.01, 000.01 wird als "ZUSE" interpretiert.
+
+Der Punkt repräsentiert das Transportloch auf dem Lochstreifen.
+
+000.00, 110.11 und 111.111 werden nicht auf den Fernschreiber gedruckt, sind also unsichtbar.
+
+
+
+Bitcode				Zi				Bu
+
+
+
+000.00				*				#
+
+000.01				3				E
+000.10				Zeilentransport			Zeilentransport
+000.11				-				A
+001.00				Leerzeichen			Leerzeichen
+001.01				'				S
+001.10				8				I
+001.11				7				U
+010.00				Wagenrücklauf			Wagenrücklauf
+010.01				Wer da?				D
+010.10				4				R
+010.11				;				J
+011.00				,				N
+011.01				[				F
+011.10				:				C
+011.11				(				K
+100.00				5				T
+100.01				+				Z
+100.10				)				L
+100.11				2				W
+101.00				Tiefgestellte 10		H
+101.01				6				Y
+101.10				0				P
+101.11				1				Q
+110.00				9				O
+110.01				Kreuz (oder '?')		B
+110.10				]				G
+110.11				Zi				Zi
+111.00				.				M
+111.01				/				X
+111.10				=				V
+111.11				Bu				Bu

@@ -1,0 +1,16 @@
+Ab Speicherstelle 100:
+
+U99		Speichert x nach Zelle 99.
+CB0		97 und 98 werden gleich 0 gesetzt.
+U97		97 hält Laufvariable i.
+U98		In 98 wird das Zwischenergebnis gesichert.
+B99		Überprüfung ob i > x.
+S97		In dem Fall ist das Programm fertig.
+QST98
+B98		Das Zwischenergebnis wird um i erhöht.
+A97
+U98
+B97		i wird um 1 erhöht.
+CA1
+U97
+E104		Sprung auf den Befehl BB99.
