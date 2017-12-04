@@ -1,0 +1,126 @@
+fileFormatVersion: 2
+guid: 48e2ebda100c51245a7d952f06c45dc5
+timeCreated: 1501750934
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Knopf1
+    100002: Knopf2
+    100004: Knopf3
+    100006: Magnettrommel
+    100008: //RootNode
+    100010: Alarm
+    100012: TrommelEin
+    100014: VorwahlFertig
+    100016: Schl_ssel
+    400000: Knopf1
+    400002: Knopf2
+    400004: Knopf3
+    400006: Magnettrommel
+    400008: //RootNode
+    400010: Alarm
+    400012: TrommelEin
+    400014: VorwahlFertig
+    400016: Schl_ssel
+    2300000: Knopf1
+    2300002: Knopf2
+    2300004: Knopf3
+    2300006: Magnettrommel
+    2300008: Alarm
+    2300010: TrommelEin
+    2300012: VorwahlFertig
+    2300014: Schl_ssel
+    3300000: Knopf1
+    3300002: Knopf2
+    3300004: Knopf3
+    3300006: Magnettrommel
+    3300008: Alarm
+    3300010: TrommelEin
+    3300012: VorwahlFertig
+    3300014: Schl_ssel
+    4300000: Knopf3
+    4300002: Knopf2
+    4300004: Knopf1
+    4300006: Magnettrommel
+    4300008: Alarm
+    4300010: VorwahlFertig
+    4300012: TrommelEin
+    4300014: Schl_ssel
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

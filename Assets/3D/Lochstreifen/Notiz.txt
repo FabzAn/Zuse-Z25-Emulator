@@ -1,0 +1,8 @@
+5-Kanal Lochstreifen
+Breite 1,74 cm
+Abstand zwischen Löchern 0,254 cm
+Die Transportlöcher haben den selben Abstand wie normale Löcher
+Abstand zwischen Rand und äußerem Loch 0,108 cm
+
+Loch Durchmesser 0,127 cm
+Transportloch Durchmesser 0,0635 cm
