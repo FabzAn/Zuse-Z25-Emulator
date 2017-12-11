@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 114925693154760560}
   - component: {fileID: 114296182285372816}
   - component: {fileID: 114237090426837238}
+  - component: {fileID: 114866300133812884}
   m_Layer: 5
   m_Name: UILochstreifenPrefab
   m_TagString: Untagged
@@ -709,6 +710,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: eda95331f96730a49a45a369de87aa29, type: 3}
   - {fileID: 2800000, guid: ade085ed4aff4af4c941824feccb959d, type: 3}
   - {fileID: 2800000, guid: 9da4192425e877745aacc7579bfe4588, type: 3}
+  lochstreifenName: Unbenannt
 --- !u!114 &114289509268013154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1073,6 +1075,53 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114866300133812884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1431432471580800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114237090426837238}
+          m_MethodName: onPointerEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114237090426837238}
+          m_MethodName: onPointerExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!114 &114878896918457384
 MonoBehaviour:
   m_ObjectHideFlags: 1

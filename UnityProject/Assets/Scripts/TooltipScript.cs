@@ -17,7 +17,7 @@ public class TooltipScript : MonoBehaviour {
 	void Start () {
 
 		if (myUI == null)
-			Debug.Log("UI Handling Script in " + transform.name + " TooltipScript nicht zugewiesen");
+			myUI = GameObject.Find("UI Wrapper").GetComponent<UIHandlingScript>();
 
 		if (inhalt == "")
 			Debug.Log("Kein Tooltip Text zugewiesen für " + transform.name);

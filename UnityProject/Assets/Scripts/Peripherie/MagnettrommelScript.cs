@@ -36,7 +36,7 @@ public class MagnettrommelScript : PeripherieScript {
 		}
 	}
 	bool _bereit = false;
-	bool bereit
+	new bool bereit
 	{
 		get {return _bereit;}
 		set

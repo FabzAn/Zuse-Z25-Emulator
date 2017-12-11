@@ -50,6 +50,10 @@ public class UIHandlingScript : MonoBehaviour {
 	public GameObject ladenFehlgeschlagenLochstreifen;
 	public GameObject keinDateiZugriffLochstreifen;
 
+	public string neuerNameLochstreifen { get; set; }
+	public GameObject neuerNameInputField;
+	public GameObject neuerNamePrompt;
+
 	public Transform lochstreifenPrefab;
 
 	public Transform lochstreifenWrapper;
@@ -59,7 +63,7 @@ public class UIHandlingScript : MonoBehaviour {
 	public KnopfScript[] knoepfe;
 
 
-	int[] gewaehlterLochstreifen;
+	LochstreifenUIScript gewaehlterLochstreifen;
 	//-1 heisst kein Lochstreifen ist gewaehlt
 	int lochstreifenPosition = -1;
 	int anzahlLochstreifen = 0;
@@ -304,7 +308,7 @@ public class UIHandlingScript : MonoBehaviour {
 			try
 			{
 				FileStream file = File.Create(pfad);
-				bf.Serialize(file, gewaehlterLochstreifen);
+				bf.Serialize(file, gewaehlterLochstreifen.ls);
 				file.Close();
 			}
 			catch (UnauthorizedAccessException e)
@@ -327,10 +331,23 @@ public class UIHandlingScript : MonoBehaviour {
 		if (File.Exists(pfad))
 		{
 			FileStream file = File.Open(pfad, FileMode.Open, FileAccess.Read);
-			int[] neu = (int[]) bf.Deserialize(file);
+
+			Lochstreifen neu;
+
+			try
+			{
+				neu = (Lochstreifen) bf.Deserialize(file);
+			}
+			//Exception um alte ls Dateien (noch als int[] gespeichert) lesen zu koennen
+			catch (InvalidCastException e)
+			{
+				file.Close();
+				file = File.Open(pfad, FileMode.Open, FileAccess.Read);
+				int[] tmp = (int[]) bf.Deserialize(file);
+				neu = new Lochstreifen(tmp);
+			}
 
 			file.Close();
-
 
 			lochstreifenHinzufuegen(neu);
 
@@ -342,6 +359,27 @@ public class UIHandlingScript : MonoBehaviour {
 		{
 			ladenFehlgeschlagenLochstreifen.SetActive(true);
 		}
+	}
+
+
+	public void namenAendernOeffnen ()
+	{
+		neuerNamePrompt.SetActive(true);
+		neuerNameInputField.GetComponent<InputField>().text = gewaehlterLochstreifen.ls.lochstreifenName;
+	}
+
+
+	public void lochsteifenNamenAendern ()
+	{
+		if (lochstreifenPosition == -1)
+		{
+			keinLochstreifen();
+			return;
+		}
+
+		gewaehlterLochstreifen.ls.lochstreifenName = neuerNameLochstreifen;
+
+		neuerNamePrompt.SetActive(false);
 	}
 
 
@@ -369,11 +407,11 @@ public class UIHandlingScript : MonoBehaviour {
 			return new []{-1};
 		}
 		else
-			return gewaehlterLochstreifen;
+			return gewaehlterLochstreifen.ls.inhalt;
 	}
 
 
-	public void lochstreifenHinzufuegen (int[] eingabe)
+	public void lochstreifenHinzufuegen (Lochstreifen eingabe)
 	{
 		Transform neuerLochstreifen = Instantiate(lochstreifenPrefab, lochstreifenWrapper);
 		neuerLochstreifen.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -100*anzahlLochstreifen);
@@ -385,7 +423,13 @@ public class UIHandlingScript : MonoBehaviour {
 	}
 
 
-	public void lochstreifenClick (int position, int[] ausgewaehlterLochstreifen)
+	public void lochstreifenHinzufuegen (int[] eingabe)
+	{
+		lochstreifenHinzufuegen(new Lochstreifen(eingabe, "Unbenannt"));
+	}
+
+
+	public void lochstreifenClick (int position, LochstreifenUIScript ausgewaehlterLochstreifen)
 	{
 		lochstreifenPosition = position;
 		gewaehlterLochstreifen = ausgewaehlterLochstreifen;

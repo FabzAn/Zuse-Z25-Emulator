@@ -11,7 +11,7 @@ public class LochstreifenleserScript : PeripherieScript {
 	public GameObject[] prefabs;
 	public UIHandlingScript ui;
 
-	public AudioSource audio;
+	public AudioSource leserAudio;
 
 
 	List<Wort> outputBuffer = new List<Wort>();
@@ -48,7 +48,7 @@ public class LochstreifenleserScript : PeripherieScript {
 
             if (_modus == Modus.Warten)
             {
-				audio.Stop();
+				leserAudio.Stop();
 
                 outputBuffer.Clear();
 				bandBefehlStehtNochAus = false;
@@ -77,7 +77,7 @@ public class LochstreifenleserScript : PeripherieScript {
 		set
 		{
 			_knopfGedrueckt = value;
-			audio.Stop();
+			leserAudio.Stop();
 		}
 	}
 
@@ -106,8 +106,8 @@ public class LochstreifenleserScript : PeripherieScript {
 
 			if (zeitpunkt >= 0.1f && positionImLochstreifen != -1)
 			{
-				if (!audio.isPlaying)
-					audio.Play();
+				if (!leserAudio.isPlaying)
+					leserAudio.Play();
 
 
 				foreach (LochstreifenScript l in lochstreifen)
@@ -256,7 +256,7 @@ public class LochstreifenleserScript : PeripherieScript {
 
 	void fertig ()
 	{
-		audio.Stop();
+		leserAudio.Stop();
 
 		foreach (LochstreifenScript l in lochstreifen)
 			l.deletos();
