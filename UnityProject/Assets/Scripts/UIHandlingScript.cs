@@ -7,7 +7,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
+using System.Runtime.InteropServices;
+
 public class UIHandlingScript : MonoBehaviour {
+
+
+	//Magischer Code, der den Windows FileDialog ermöglicht. System.Windows.Forms.dll muss im Plugins Ordner sein
+	[DllImport("user32.dll")]
+	private static extern void SaveFileDialog();
+	[DllImport("user32.dll")]
+	private static extern void OpenFileDialog();
+
+
+
 
 	public RechenwerkScript rechenWerk;
 	public MagnettrommelScript magnetTrommel;
@@ -32,23 +44,6 @@ public class UIHandlingScript : MonoBehaviour {
 	public int ausgeklapptesX;
 	[Tooltip("Ausklapp Tempo in Pixel pro Sekunde")]
 	public float ausklappGeschwindigkeit;
-
-	public string dateiName {get; set;}
-	public GameObject dateiNameInputField;
-	public GameObject speichernPrompt;
-	public GameObject speichernBestaetigen;
-	public GameObject ladenPrompt;
-	public GameObject ladenFehlgeschlagen;
-	public GameObject keinDateiZugriff;
-
-	//Nochmal das alles fuer das Speichern von Lochstreifen
-	public string dateiNameLochstreifen {get; set;}
-	public GameObject dateiNameInputFieldLochstreifen;
-	public GameObject speichernPromptLochstreifen;
-	public GameObject speichernBestaetigenLochstreifen;
-	public GameObject ladenPromptLochstreifen;
-	public GameObject ladenFehlgeschlagenLochstreifen;
-	public GameObject keinDateiZugriffLochstreifen;
 
 	public string neuerNameLochstreifen { get; set; }
 	public GameObject neuerNameInputField;
@@ -99,6 +94,10 @@ public class UIHandlingScript : MonoBehaviour {
 			Debug.Log("tooltip in UI Wrapper nicht zugewiesen");
 		else
 			tooltipImgRect = tooltipImg.GetComponent<RectTransform>();
+
+
+		//Falls kein Saves Ordner existiert, wird er jetzt erstellt
+		Directory.CreateDirectory(Application.dataPath + "/Saves/");
 	}
 
 
@@ -201,35 +200,33 @@ public class UIHandlingScript : MonoBehaviour {
 	}
 
 
-	public void speichern (bool ueberschreiben)
+	public void speichern ()
 	{
 		Speichereinheit einheit = new Speichereinheit(magnetTrommel.gesamtenInhaltAuslesen(), rechenWerk.speicherGet());
 
 		BinaryFormatter bf = new BinaryFormatter();
-		string pfad = Application.dataPath + "/Saves/" + dateiName + ".z25";
+		FileStream myStream = null;
+		System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 
-		Directory.CreateDirectory(Application.dataPath + "/Saves/");
+		saveFileDialog1.InitialDirectory = Application.dataPath + "/Saves/";
+		saveFileDialog1.Filter = "Z25 Files (*.z25)|*.z25|All files (*.*)|*.*" ;
 
-		if (!ueberschreiben && File.Exists(pfad))
-		{
-			speichernBestaetigen.SetActive(true);
-		}
-		else
+		if(saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 		{
 			try
 			{
-				FileStream file = File.Create(pfad);
-				bf.Serialize(file, einheit);
-				file.Close();
+				if ((myStream = (FileStream) saveFileDialog1.OpenFile()) != null)
+				{
+					using (myStream)
+					{
+						bf.Serialize(myStream, einheit);
+					}
+				}
 			}
-			catch (UnauthorizedAccessException e)
+			catch (Exception ex)
 			{
-				keinDateiZugriff.SetActive(true);
+				System.Windows.Forms.MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
 			}
-
-			speichernPrompt.SetActive(false);
-			speichernBestaetigen.SetActive(false);
-			dateiNameInputField.SetActive(false);
 		}
 	}
 
@@ -237,25 +234,31 @@ public class UIHandlingScript : MonoBehaviour {
 	public void laden ()
 	{
 		BinaryFormatter bf = new BinaryFormatter();
-		string pfad = Application.dataPath + "/Saves/" + dateiName + ".z25";
+		FileStream myStream = null;
+		System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 
-		if (File.Exists(pfad))
+		openFileDialog1.InitialDirectory = Application.dataPath + "/Saves/";
+		openFileDialog1.Filter = "Z25 Files (*.z25)|*.z25|All files (*.*)|*.*" ;
+
+		if(openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 		{
-			FileStream file = File.Open(pfad, FileMode.Open, FileAccess.Read);
-			Speichereinheit einheit = (Speichereinheit) bf.Deserialize(file);
+			try
+			{
+				if ((myStream = (FileStream) openFileDialog1.OpenFile()) != null)
+				{
+					using (myStream)
+					{
+						Speichereinheit einheit = (Speichereinheit) bf.Deserialize(myStream);
 
-
-			rechenWerk.speicherSet(einheit.getSpeicher());
-			magnetTrommel.gesamtenInhaltSchreiben(einheit.getTrommel());
-			file.Close();
-
-			ladenPrompt.SetActive(false);
-			ladenFehlgeschlagen.SetActive(false);
-			dateiNameInputField.SetActive(false);
-		}
-		else
-		{
-			ladenFehlgeschlagen.SetActive(true);
+						rechenWerk.speicherSet(einheit.getSpeicher());
+						magnetTrommel.gesamtenInhaltSchreiben(einheit.getTrommel());
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Windows.Forms.MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+			}
 		}
 	}
 
@@ -285,79 +288,70 @@ public class UIHandlingScript : MonoBehaviour {
 
 
 	//Das Speichern und Laden von Lochstreifen funktioniert genau wie das regulaere Speichern/Laden
-	public void lochstreifenSpeichern (bool ueberschreiben)
+	public void lochstreifenSpeichern ()
 	{
 		if (lochstreifenPosition == -1)
 		{
 			keinLochstreifen();
 			return;
 		}
-
-
+			
 		BinaryFormatter bf = new BinaryFormatter();
-		string pfad = Application.dataPath + "/Saves/" + dateiNameLochstreifen + ".ls";
+		FileStream myStream = null;
+		System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 
-		Directory.CreateDirectory(Application.dataPath + "/Saves/");
+		saveFileDialog1.InitialDirectory = Application.dataPath + "/Saves/";
+		saveFileDialog1.Filter = "Lochstreifen Files (*.ls)|*.ls|All files (*.*)|*.*" ;
 
-		if (!ueberschreiben && File.Exists(pfad))
-		{
-			speichernBestaetigenLochstreifen.SetActive(true);
-		}
-		else
+		if(saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 		{
 			try
 			{
-				FileStream file = File.Create(pfad);
-				bf.Serialize(file, gewaehlterLochstreifen.ls);
-				file.Close();
+				if ((myStream = (FileStream) saveFileDialog1.OpenFile()) != null)
+				{
+					using (myStream)
+					{
+						bf.Serialize(myStream, gewaehlterLochstreifen.ls);
+					}
+				}
 			}
-			catch (UnauthorizedAccessException e)
+			catch (Exception ex)
 			{
-				keinDateiZugriffLochstreifen.SetActive(true);
+				System.Windows.Forms.MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
 			}
-
-			speichernPromptLochstreifen.SetActive(false);
-			speichernBestaetigenLochstreifen.SetActive(false);
-			dateiNameInputFieldLochstreifen.SetActive(false);
 		}
 	}
 
 
+
+	//Lochstreifen die noch mit dem alten Format (als int[]) gespeichert wurden, koennen hiermit nicht geoeffnet werden
 	public void lochstreifenLaden ()
 	{
 		BinaryFormatter bf = new BinaryFormatter();
-		string pfad = Application.dataPath + "/Saves/" + dateiNameLochstreifen + ".ls";
+		FileStream myStream = null;
+		System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 
-		if (File.Exists(pfad))
+		openFileDialog1.InitialDirectory = Application.dataPath + "/Saves/";
+		openFileDialog1.Filter = "Lochstreifen Files (*.ls)|*.ls|All files (*.*)|*.*" ;
+
+		if(openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 		{
-			FileStream file = File.Open(pfad, FileMode.Open, FileAccess.Read);
-
-			Lochstreifen neu;
-
 			try
 			{
-				neu = (Lochstreifen) bf.Deserialize(file);
+				if ((myStream = (FileStream) openFileDialog1.OpenFile()) != null)
+				{
+					using (myStream)
+					{
+						Lochstreifen neu = (Lochstreifen) bf.Deserialize(myStream);
+
+						lochstreifenHinzufuegen(neu);
+					}
+				}
 			}
-			//Exception um alte ls Dateien (noch als int[] gespeichert) lesen zu koennen
-			catch (InvalidCastException e)
+			catch (Exception ex)
 			{
-				file.Close();
-				file = File.Open(pfad, FileMode.Open, FileAccess.Read);
-				int[] tmp = (int[]) bf.Deserialize(file);
-				neu = new Lochstreifen(tmp);
+				System.Windows.Forms.MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
 			}
-
-			file.Close();
-
-			lochstreifenHinzufuegen(neu);
-
-			ladenPromptLochstreifen.SetActive(false);
-			ladenFehlgeschlagenLochstreifen.SetActive(false);
-			dateiNameInputFieldLochstreifen.SetActive(false);
-		}
-		else
-		{
-			ladenFehlgeschlagenLochstreifen.SetActive(true);
 		}
 	}
 

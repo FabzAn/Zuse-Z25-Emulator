@@ -106,6 +106,9 @@
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>D:/Programme/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
+ <Reference Include="System.Windows.Forms">
+ <HintPath>D:/OpenSourceProjects/Z25/GitOrdner/UnityProject/Assets/Plugins/System.Windows.Forms.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
